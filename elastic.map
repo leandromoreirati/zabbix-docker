@@ -1,0 +1,179 @@
+curl -X PUT \
+ http://elasticsearch:9200/text \
+ -H 'content-type:application/json' \
+ -d '{
+ "settings" : {
+    "index" : {
+       "number_of_replicas" : 1,
+       "number_of_shards" : 5
+    }
+ },
+ "mappings" : {
+    "values" : {
+       "properties" : {
+          "itemid" : {
+             "type" : "long"
+          },
+          "clock" : {
+             "format" : "epoch_second",
+             "type" : "date"
+          },
+          "value" : {
+             "fields" : {
+                "analyzed" : {
+                   "index" : true,
+                   "type" : "text",
+                   "analyzer" : "standard"
+                }
+             },
+             "index" : false,
+             "type" : "text"
+          }
+       }
+    }
+ }
+}
+
+curl -X PUT \
+ http://elasticsearch:9200/uint \
+ -H 'content-type:application/json' \
+ -d '{
+ "settings" : {
+    "index" : {
+       "number_of_replicas" : 1,
+       "number_of_shards" : 5
+    }
+ },
+ "mappings" : {
+    "values" : {
+       "properties" : {
+          "itemid" : {
+             "type" : "long"
+          },
+          "clock" : {
+             "format" : "epoch_second",
+             "type" : "date"
+          },
+          "value" : {
+             "fields" : {
+                "analyzed" : {
+                   "index" : true,
+                   "type" : "uint",
+                   "analyzer" : "standard"
+                }
+             },
+             "index" : false,
+             "type" : "uint"
+          }
+       }
+    }
+ }
+}
+
+curl -X PUT \
+ http://elasticsearch:9200/dbl \
+ -H 'content-type:application/json' \
+ -d '{
+ "settings" : {
+    "index" : {
+       "number_of_replicas" : 1,
+       "number_of_shards" : 5
+    }
+ },
+ "mappings" : {
+    "values" : {
+       "properties" : {
+          "itemid" : {
+             "type" : "long"
+          },
+          "clock" : {
+             "format" : "epoch_second",
+             "type" : "date"
+          },
+          "value" : {
+             "fields" : {
+                "analyzed" : {
+                   "index" : true,
+                   "type" : "dbl",
+                   "analyzer" : "standard"
+                }
+             },
+             "index" : false,
+             "type" : "dbl"
+          }
+       }
+    }
+ }
+}
+
+curl -X PUT \
+ http://elasticsearch:9200/str \
+ -H 'content-type:application/json' \
+ -d '{
+ "settings" : {
+    "index" : {
+       "number_of_replicas" : 1,
+       "number_of_shards" : 5
+    }
+ },
+ "mappings" : {
+    "values" : {
+       "properties" : {
+          "itemid" : {
+             "type" : "long"
+          },
+          "clock" : {
+             "format" : "epoch_second",
+             "type" : "date"
+          },
+          "value" : {
+             "fields" : {
+                "analyzed" : {
+                   "index" : true,
+                   "type" : "str",
+                   "analyzer" : "standard"
+                }
+             },
+             "index" : false,
+             "type" : "str"
+          }
+       }
+    }
+ }
+}
+
+curl -X PUT \
+ http://elasticsearch:9200/log \
+ -H 'content-type:application/json' \
+ -d '{
+ "settings" : {
+    "index" : {
+       "number_of_replicas" : 1,
+       "number_of_shards" : 5
+    }
+ },
+ "mappings" : {
+    "values" : {
+       "properties" : {
+          "itemid" : {
+             "type" : "long"
+          },
+          "clock" : {
+             "format" : "epoch_second",
+             "type" : "date"
+          },
+          "value" : {
+             "fields" : {
+                "analyzed" : {
+                   "index" : true,
+                   "type" : "log",
+                   "analyzer" : "standard"
+                }
+             },
+             "index" : false,
+             "type" : "log"
+          }
+       }
+    }
+ }
+}

@@ -1,0 +1,207 @@
+version: "3.7"
+services:
+
+# ZABBIX SERVER
+  zabbix-server:
+    image: leandromoreirajfa/zabbix-server:1.2
+    command: setup.sh
+    env_file:
+      - configs/server.config
+    hostname: zabbix-server
+    ports:
+      - "10051:10051"
+    stdin_open: true
+    deploy:
+      #placement:
+       # constraints: [node.role == manager]
+      resources:
+        limits:
+          memory: 3072M
+          cpus: '2'
+        reservations:
+          cpus: '1'
+          memory: 1536M  
+      restart_policy:
+        condition: on-failure   
+    volumes:
+      - zabbix-externalscript:/usr/lib/zabbix/alertscripts
+      - zabbix-alertscript:/usr/lib/zabbix/externalscripts
+      - zabbix-etc:/etc/zabbix
+      - zabbix-snmp:/usr/share/snmp/mibs
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "250m"
+        max-file: "3"
+    networks:
+      - backend
+
+# ZABBIX WEB
+  zabbix-web:
+    image: leandromoreirajfa/zabbix-web:1.2
+    command: setup.sh
+    env_file:
+      - configs/web.config
+    hostname: zabbix-web
+    stdin_open: true
+    volumes:
+      - /root/zabbix-docker/zabbix-web/configs/ssl/fullchain1.pem:/etc/apache2/ssl/fullchain1.pem
+      - /root/zabbix-docker/zabbix-web/configs/ssl/privkey1.pem:/etc/apache2/ssl/privkey1.pem
+      #- zabbix-snmp:/usr/share/snmp/mibs
+    deploy:
+      #placement:
+       # constraints: [node.role == manager]
+      resources:
+        limits:
+          memory: 3072M
+          cpus: '2'
+        reservations:
+          cpus: '1'
+          memory: 1536M
+      labels:
+        - "traefik.port=80"
+        - "traefik.docker.network=backend"
+        - "traefik.frontend.rule=Host:noc.leandromoreirati.com.br"
+        - "traefik.backend.loadbalancer.sticky=true"
+      restart_policy:
+        condition: on-failure
+    #stop_grace_period: 90s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "250m"
+        max-file: "3"
+    networks:
+      - backend   
+
+# GRAFANA
+  grafana-server:
+    image: grafana/grafana
+    hostname: grafana-server
+    volumes:
+      - grafana-lib:/var/lib/grafana
+    env_file:
+      - configs/grafana.config
+    #ports:
+    #  - "3000:3000"
+    stdin_open: true
+    deploy:
+      #placement:
+       # constraints: [node.role == manager]
+      labels:
+        - "traefik.port=3000"
+        - "traefik.docker.network=backend"
+        - "traefik.frontend.rule=Host:grafana.leandromoreirati.com.br"
+        - "traefik.backend.loadbalancer.sticky=true"
+      resources:
+        limits:
+          memory: 3072M
+          cpus: '2'
+        reservations:
+          cpus: '1'
+          memory: 1536M
+      restart_policy:
+        condition: on-failure
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "250m"
+        max-file: "3"
+    env_file:
+      - grafana.config
+    networks:
+      - backend
+
+# ELASTICSEARCH
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.4.0
+    hostname: elasticsearch
+    volumes:
+       - elasticdb:/usr/share/elasticsearch/data
+    environment:
+      #- cluster.name=zabbix-elasticsearch
+      #- bootstrap.memory_lock=true
+      #- "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      #- "discovery.zen.ping.unicast.hosts=elasticsearch"
+      - discovery.type=single-node
+    ports:
+       - "9200:9200"
+       - "9300:9300"
+    stdin_open: true
+    deploy:
+      #placement:
+       # constraints: [node.role == manager]
+      #replicas: 3
+      resources:
+        limits:
+          memory: 3072M
+          cpus: '2'
+        reservations:
+          cpus: '1'
+          memory: 2048M
+      restart_policy:
+        condition: on-failure
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "250m"
+        max-file: "3"
+    networks:
+      - backend
+
+# TRAEFIK
+  traefik:
+    image: traefik:latest
+    hostname: traefik
+    command: --web --docker --docker.swarmmode --docker.watch --docker.domain=leandromoreirati.com.br --logLevel=DEBUG
+    ports:
+      - "80:80"
+      - "8080:8080"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /dev/null:/traefik.toml
+    labels:
+      - "traefik.enable=false"
+    deploy:
+      replicas: 3
+      placement:
+        constraints: [node.role==manager]
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          memory: 3072M
+          cpus: '2'
+        reservations:
+          cpus: '1'
+          memory: 2048M
+    networks:
+      - backend
+      - frontend
+
+# VOLUME GRAFANA
+volumes:
+  zabbix-alertscript:
+  zabbix-externalscript:
+  zabbix-etc:
+  zabbix-snmp:
+  postgresqldb:
+  grafana-lib:
+  elasticdb:
+ 
+# REDE
+networks:
+  backend:
+    driver: overlay
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.30.0.0/24
+
+  frontend:
+    driver: overlay
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.31.0.0/24 
