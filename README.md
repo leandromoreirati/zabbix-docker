@@ -25,7 +25,7 @@ Os pre-requisitos necessários para execução da stack de serviço:
    docker pull leandromoreirajfa/zabbix-web:1.2\
    docker pull grafana/grafana\
    docker pull docker.elastic.co/elasticsearch/elasticsearch:6.4.0\
-   docker pull traefik:latest
+   docker pull traefik
 
 # SERVIÇO ZABBIX SERVER
 Para configurar o serviço do Zabbix Server, editar o arquivo server.config que localiza-se no diretório configs, alterando as variáveis:
