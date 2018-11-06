@@ -3,7 +3,7 @@
 Criado por Leandro Moreira\
 E-Mail: leandro@leandromoreira.eti.br\
 
-Os serviços que compõe essa stack tem a finalidade de realizar a instalação e configuração de um ambiente de monitoramento usando o Zabbix, realizando a integração do mesmo com o Elasticsearch possibilitando dessa forma melhorar a performance de acesso aos dados históricos do zabbix.
+Os serviços que compõe essa stack tem por finalidade realizar a instalação e configuração de um ambiente de monitoramento do Zabbix usando o Docker e realizando a integração do mesmo com o Elasticsearch possibilitando dessa forma melhorar a performance de acesso aos dados históricos do Zabbix.
 
 # ° NOTAS DE VERSÃO
 
