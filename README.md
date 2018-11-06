@@ -1,4 +1,4 @@
-![alt tag](https://www.zabbix.com/forum/filedata/fetch?filedataid=10625)
+![alt tag](https://assets.zabbix.com/img/logo.svg)
 
 Os serviços que compõe essa stack tem por finalidade realizar a instalação e configuração de um ambiente de monitoramento do Zabbix usando o Docker e realizando a integração do mesmo com o Elasticsearch possibilitando dessa forma melhorar a performance de acesso aos dados históricos do Zabbix.
 
