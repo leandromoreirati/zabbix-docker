@@ -9,12 +9,13 @@ Os serviços que compõe essa stack tem por finalidade realizar a instalação e
 ° Versão 1.0 - 15/07/2018 ==> Criação do Dockerfile e do Docker composse.\
 ° Update 1.1 - 30/08/2018 ==> Atualizaco da versao do zabbix server, inclusao do traefik como servico de proxy reverso.\
 ° Update 1.2 - 30/08/2018 ==> Configuração do modulo SSL no apache.\
-° Update 1.3 - 04/12/2018 ==> Inclusão do Everyz e atualização da versão do elasticsearch para a versão 6.5.0.
+° Update 1.3 - 04/12/2018 ==> Inclusão do [Everyz](http://www.everyz.org/en/) e atualização da versão do elasticsearch para a versão 6.5.0.
 
 # PRÉ-REQUISITO
 Os pre-requisitos necessários para execução da stack de serviço:
  1) Docker instalado e configurado.
  2) Docker Swarm configurado.
+ 3) Postgresql instalado e configurado.
 
 # INSTALANDO E CONFIGURANDO DOCKER
    curl -fsSL https://get.docker.com | bash
