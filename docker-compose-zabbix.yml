@@ -3,7 +3,7 @@ services:
 
 # ZABBIX SERVER
   zabbix-server:
-    image: leandromoreirajfa/zabbix-server:1.2
+    image: leandromoreirajfa/zabbix-server:1.3
     command: setup.sh
     env_file:
       - configs/server.config
@@ -38,7 +38,7 @@ services:
 
 # ZABBIX WEB
   zabbix-web:
-    image: leandromoreirajfa/zabbix-web:1.2
+    image: leandromoreirajfa/zabbix-web:1.3
     command: setup.sh
     env_file:
       - configs/web.config
@@ -114,7 +114,7 @@ services:
 
 # ELASTICSEARCH
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:6.4.0
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.5.0
     hostname: elasticsearch
     volumes:
        - elasticdb:/usr/share/elasticsearch/data
@@ -194,14 +194,6 @@ volumes:
 networks:
   backend:
     driver: overlay
-    ipam:
-      driver: default
-      config:
-      - subnet: 172.30.0.0/24
 
   frontend:
     driver: overlay
-    ipam:
-      driver: default
-      config:
-      - subnet: 172.31.0.0/24 

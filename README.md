@@ -2,10 +2,14 @@
 
 Os serviços que compõe essa stack tem por finalidade realizar a instalação e configuração de um ambiente de monitoramento do Zabbix usando o Docker e realizando a integração do mesmo com o Elasticsearch possibilitando dessa forma melhorar a performance de acesso aos dados históricos do Zabbix.
 
+# VERSÃO DO ZABBIX
+  3.4.15
+
 # NOTAS DE VERSÃO
-°  Versão 1.0 - 15/07/2018 ==> Criação do Dockerfile e do Docker composse.\
-°  Update 1.1 - 30/08/2018 ==> Atualizaco da versao do zabbix server, inclusao do traefik como servico de proxy reverso.\
-°  Update 1.2 - 30/08/2018 ==> Configuração do modulo SSL no apache. 
+° Versão 1.0 - 15/07/2018 ==> Criação do Dockerfile e do Docker composse.\
+° Update 1.1 - 30/08/2018 ==> Atualizaco da versao do zabbix server, inclusao do traefik como servico de proxy reverso.\
+° Update 1.2 - 30/08/2018 ==> Configuração do modulo SSL no apache.\
+° Update 1.3 - 04/12/2018 ==> Inclusão do Everyz e atualização da versão do elasticsearch para a versão 6.5.0.
 
 # PRÉ-REQUISITO
 Os pre-requisitos necessários para execução da stack de serviço:
