@@ -2,9 +2,13 @@ pipeline {
   agent { label 'any' }
    stages {
 
-      steps ('Deployment') {
-        sh '''
-
+      stage ('Deployment') {
+          when { 
+                branch 'develop' 
+          }
+        
+         steps
+             sh '''
               echo "Hellow World!"
            '''
        }
