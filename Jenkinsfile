@@ -7,10 +7,11 @@ pipeline {
                 branch 'develop' 
           }
         
-         steps
+         steps {
              sh '''
               echo "Hellow World!"
            '''
+         }
        }
 
    }
