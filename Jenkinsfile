@@ -1,18 +1,14 @@
+
 pipeline {
-  //agent { label 'any' }
-   stages {
+    agent none
 
-      stage ('Deployment') {
-          when { 
-                branch 'develop' 
-          }
-        
-         steps {
-             sh '''
-              echo "Hellow World!"
-           '''
-         }
-       }
+    stages {
+        when {
+            branch 'develop'
+        }
+        steps {
+            sh echo "Hello World!"
+        }
 
-   }
+    }
 }
