@@ -1,14 +1,11 @@
 
 pipeline {
-    agent none
+    agent any
 
-    stages {
-        when {
-            branch 'develop'
-        }
-        steps {
-            sh echo "Hello World!"
-        }
-
+  stages {
+    stage('duild'){
+      steps{
+        ''' sh echo "hello world" '''
+      }  
     }
-}
+  }
