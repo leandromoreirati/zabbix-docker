@@ -5,7 +5,7 @@ pipeline {
   stages {
     stage('duild'){
       steps{
-         sh echo "hello world"
+         sh 'echo "hello world"'
       }  
     }
   }
